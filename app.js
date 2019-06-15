@@ -16,6 +16,9 @@ var bot = new builder.UniversalBot(connector);
 
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
+server.get('/', function(req, res, next){
+  res.send('Chào mừng bạn đến với bot của Thắng Ngô :v');
+});
 server.get('/hello', function(req, res, next){
   res.send('Hello World');
 });
