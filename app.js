@@ -1,5 +1,6 @@
 ﻿var restify = require('restify');
 var builder = require('botbuilder');
+var dt = require('./myfirstmodule');
 
 var server = restify.createServer();
 
@@ -30,10 +31,8 @@ server.get('/hello', function (req, res, next) {
   res.send('Hello World');
 });
 
-server.get('/sendMessage', function (req, res, next) {
-  debugger;
-  console.log(req.query.id);
-  console.log('');
+server.get('/getDate', function (req, res, next) {
+  res.send(dt.myDateTime());
 })
 
 bot.on('contactRelationUpdate', function (message) {
