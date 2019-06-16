@@ -1,9 +1,11 @@
 ﻿var restify = require('restify');
 var builder = require('botbuilder');
 
+var inMemoryStorage = new builder.MemoryBotStorage();
+
 var server = restify.createServer();
 server.use(restify.plugins.queryParser());
-server.listen(process.env.port || process.env.PORT || 8080, function () {
+server.listen(process.env.port || process.env.PORT || 56789, function () {
   console.log('%s listening to %s', server.name, server.url);
 });
 
@@ -13,7 +15,7 @@ var connector = new builder.ChatConnector({
   appPassword: 'wnwMNYN039$mksaVDA70_%]'
 });
 
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage); // Register in memory storage;
 
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
