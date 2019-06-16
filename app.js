@@ -46,23 +46,27 @@ String.prototype.contains = function (content) {
 
 bot.dialog('/', function (session) {
   console.log(session.message.address);
-  alert('Hello');
+  bot.send(new builder.Message()
+  .text('Hello !')
+  .address(session.message.address));
   if (session.message.text.indexOf('Haposoft') !== -1) {
-    alert('Haposoft');          
+         
     bot.send(new builder.Message()
       .text('Đừng rời xa tôi, vì tôi lỡ yêu người mất rồi !')
       .address(session.message.address));
   } else if (session.message.text.indexOf('getid') > -1) {
-    alert('getid');  
+    
     bot.send(new builder.Message()
       .text('Your Skype Id: ' + session.message.address.conversation.id)
       .address(session.message.address));
   } else {
-    alert('common');      
+     
     bot.send(new builder.Message()
       .text('Chúng ta không thuộc về nhau !!!')
       .address(session.message.address));
   }
-  alert('Goodbye');
+  bot.send(new builder.Message()
+  .text('GoodBye !')
+  .address(session.message.address));
   
 });

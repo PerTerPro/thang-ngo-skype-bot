@@ -9,6 +9,14 @@
             "endpoint": "http://localhost:8080/api/messages",
             "name": "LocalBot",
             "id": "133"
+        },
+        {
+            "type": "endpoint",
+            "endpoint": "https://thang-ngo-bot.herokuapp.com/api/messages",
+            "name": "HerokuBot",
+            "id": "58",
+            "appId": "5d40f369-ac75-4d56-986d-3a6dd43bbbeb",
+            "appPassword": "wnwMNYN039$mksaVDA70_%]"
         }
     ],
     "padlock": "",
