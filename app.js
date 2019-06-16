@@ -1,13 +1,14 @@
-﻿var restify = require('restify');  
+﻿var restify = require('restify');
 var builder = require('botbuilder');
 
-var server = restify.createServer();  
-server.listen(process.env.port || process.env.PORT, function () {  
+var server = restify.createServer();
+server.use(restify.plugins.queryParser());
+server.listen(process.env.port || process.env.PORT || 8080, function () {
   console.log('%s listening to %s', server.name, server.url);
 });
 
 
-var connector = new builder.ChatConnector({  
+var connector = new builder.ChatConnector({
   appId: '5d40f369-ac75-4d56-986d-3a6dd43bbbeb',
   appPassword: 'wnwMNYN039$mksaVDA70_%]'
 });
@@ -16,14 +17,20 @@ var bot = new builder.UniversalBot(connector);
 
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
-server.get('/', function(req, res, next){
+server.get('/', function (req, res, next) {
   res.send('Chào mừng bạn đến với bot của Thắng Ngô :v');
 });
-server.get('/hello', function(req, res, next){
+server.get('/hello', function (req, res, next) {
   res.send('Hello World');
 });
 
-bot.on('contactRelationUpdate', function (message) {  
+server.get('/sendMessage', function (req, res, next) {
+  debugger;
+  console.log(req.query.id);
+  console.log('');
+})
+
+bot.on('contactRelationUpdate', function (message) {
   if (message.action === 'add') {
     var name = message.user ? message.user.name : null;
     var reply = new builder.Message()
@@ -33,18 +40,29 @@ bot.on('contactRelationUpdate', function (message) {
   }
 });
 
-String.prototype.contains = function (content) {  
+String.prototype.contains = function (content) {
   return this.indexOf(content) !== -1;
 }
 
-bot.dialog('/', function (session) {    
+bot.dialog('/', function (session) {
+  console.log(session.message.address);
+  alert('Hello');
   if (session.message.text.indexOf('Haposoft') !== -1) {
+    alert('Haposoft');          
     bot.send(new builder.Message()
       .text('Đừng rời xa tôi, vì tôi lỡ yêu người mất rồi !')
       .address(session.message.address));
+  } else if (session.message.text.indexOf('getid') > -1) {
+    alert('getid');  
+    bot.send(new builder.Message()
+      .text('Your Skype Id: ' + session.message.address.conversation.id)
+      .address(session.message.address));
   } else {
+    alert('common');      
     bot.send(new builder.Message()
       .text('Chúng ta không thuộc về nhau !!!')
       .address(session.message.address));
   }
+  alert('Goodbye');
+  
 });

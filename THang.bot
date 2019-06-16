@@ -1,0 +1,18 @@
+{
+    "name": "THang",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "5d40f369-ac75-4d56-986d-3a6dd43bbbeb",
+            "appPassword": "wnwMNYN039$mksaVDA70_%]",
+            "endpoint": "http://localhost:8080/api/messages",
+            "name": "LocalBot",
+            "id": "133"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "path": "D:\\All Project\\NodeJS\\bot-test\\THang.bot",
+    "overrides": null
+}
