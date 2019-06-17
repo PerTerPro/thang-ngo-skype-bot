@@ -1,14 +1,14 @@
 ﻿var restify = require('restify');
 var builder = require('botbuilder');
-var dt = require('./myfirstmodule');
+var weather = require('./weather');
 
 var server = restify.createServer();
 
 // using plugin của restify 
 //http://restify.com/docs/plugins-api/#queryparser
-server.use(restify.plugins.queryParser());    
+server.use(restify.plugins.queryParser());
 
-server.listen(process.env.port || process.env.PORT, function () {
+server.listen(process.env.port || process.env.PORT || 56789, function () {
   console.log('%s listening to %s', server.name, server.url);
 });
 
@@ -27,13 +27,30 @@ server.post('/api/messages', connector.listen());
 server.get('/', function (req, res, next) {
   res.send('Chào mừng bạn đến với bot của Thắng Ngô :v');
 });
+
+// demo về next function
 server.get('/hello', function (req, res, next) {
-  res.send('Hello World');
+  req.cache = 'a';
+  next();
+  // res.send('Hello World');
+}, function (req, res, next) {
+  if (req.cache) {
+    res.send('cache');
+  }
+  else {
+    res.send('not cache');
+  }
 });
 
-server.get('/getDate', function (req, res, next) {
-  res.send(dt.myDateTime());
-})
+server.get('/weather', function (req, res, next) {
+  weather.getWeather()
+    .then(function (data) {
+      res.send(data);
+    })
+    .catch(function (error) {
+      next(error);
+    });
+});
 
 bot.on('contactRelationUpdate', function (message) {
   if (message.action === 'add') {
@@ -50,14 +67,39 @@ String.prototype.contains = function (content) {
 }
 
 bot.dialog('/', function (session) {
-  console.log(session.message.address);
-  if (session.message.text.indexOf('getid') > -1) {
+  // console.log(session.message.address);
+  // var resMess = new builder.Message();
+  var mess = session.message.text.toLowerCase();
+
+  if (mess.indexOf('getid') > -1) {
     bot.send(new builder.Message()
       .text('Your Skype Id: ' + session.message.address.conversation.id)
       .address(session.message.address));
-  } else {
+  }
+  else if (mess.indexOf('thời tiết') || mess.indexOf('weather')) {
+    weather.getWeather()
+      .then(function (data) {      
+        bot.send(new builder.Message().address(session.message.address).text(data));        
+      })
+      .catch(function (error) {
+        next(error);
+        bot.send(new builder.Message()
+        .text(error.message)
+        .address(session.message.address));
+      });
+  }
+  else {
+    // bot.send(resMess.address(session.message.address).text('Chúng ta không thuộc về nhau !!!'));
     bot.send(new builder.Message()
       .text('Chúng ta không thuộc về nhau !!!')
       .address(session.message.address));
   }
+});
+
+
+// Example cho cái next
+server.use(function (error, req, res, next) {
+  console.log(error);
+  res.statusCode(500);
+  res.send(error.message);
 });
