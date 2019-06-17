@@ -76,7 +76,7 @@ bot.dialog('/', function (session) {
       .text('Your Skype Id: ' + session.message.address.conversation.id)
       .address(session.message.address));
   }
-  else if (mess.indexOf('thời tiết') || mess.indexOf('weather')) {
+  else if (mess.indexOf('thời tiết') > -1 || mess.indexOf('weather') > -1) {
     weather.getWeather()
       .then(function (data) {      
         bot.send(new builder.Message().address(session.message.address).text(data));        
