@@ -66,9 +66,10 @@ server.get('/sendMessage', function (req, res, next) {
     bot.send(new builder.Message()
     .text(req.query.message)
     .address(address));  
-    res.send('Đã gửi message ạ :v');
+    res.status(200).json('Đã gửi message ạ :v');
   }else{
-    res.send('Vui lòng điền conversationId');
+    // res.send('Vui lòng điền conversationId');
+    res.status(200).json('Vui lòng điền conversationId');
   }
 });
 
