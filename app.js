@@ -18,7 +18,7 @@ const connector = new builder.ChatConnector({
   appPassword: 'wnwMNYN039$mksaVDA70_%]'
 });
 
-var inMemoryStorage = new builder.MemoryBotStorage();
+const inMemoryStorage = new builder.MemoryBotStorage();
 
 const bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage); // Register in memory storage;
 
