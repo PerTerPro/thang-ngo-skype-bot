@@ -9,17 +9,17 @@ exports.insertWork = function () {
         var db = client.db("bot-database");
         const collection = db.collection("bot-work");
         // perform actions on the collection object
-        var data = {
-            name: "ao thun",
-            price: 50000,
-            category: "quan ao"
-        }
-        collection.insertOne(data, function (err,res) {
-            //neu xay ra loir
-            if (err) throw err;
-            //neu khong co loi
-            console.log('Them thanh cong');
-        });
+        // var data = {
+        //     name: "ao thun",
+        //     price: 50000,
+        //     category: "quan ao"
+        // }
+        // collection.insertOne(data, function (err,res) {
+        //     //neu xay ra loir
+        //     if (err) throw err;
+        //     //neu khong co loi
+        //     console.log('Them thanh cong');
+        // });
         client.close();
     });
 
