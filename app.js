@@ -1,9 +1,9 @@
-﻿var restify = require('restify');
-var builder = require('botbuilder');
-var weather = require('./weather');
-var botWork = require('./bot-work-repo');
+﻿const restify = require('restify');
+const builder = require('botbuilder');
+const weather = require('./weather');
+const botWork = require('./bot-work-repo');
 
-var server = restify.createServer();
+const server = restify.createServer();
 
 // using plugin của restify 
 //http://restify.com/docs/plugins-api/#queryparser
@@ -13,14 +13,14 @@ server.listen(process.env.port || process.env.PORT || 56789, function () {
   console.log('%s listening to %s', server.name, server.url);
 });
 
-var connector = new builder.ChatConnector({
+const connector = new builder.ChatConnector({
   appId: '5d40f369-ac75-4d56-986d-3a6dd43bbbeb',
   appPassword: 'wnwMNYN039$mksaVDA70_%]'
 });
 
 var inMemoryStorage = new builder.MemoryBotStorage();
 
-var bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage); // Register in memory storage;
+const bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage); // Register in memory storage;
 
 // ---- Handle user action ----
 bot.on('contactRelationUpdate', function (message) {
