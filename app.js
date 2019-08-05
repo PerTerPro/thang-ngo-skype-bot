@@ -56,18 +56,23 @@ server.get('/hello', function (req, res, next) {
 
 server.get('/sendMessage', function (req, res, next) {
   if(req.query.conversationId != undefined){
-    var address = {
-      channelId: 'skype',
-      serviceUrl: 'https://smba.trafficmanager.net/apis/',
-      conversation:{  
-        id: req.query.conversationId
-     }
-    };
-    bot.send(new builder.Message()
-    .text(req.query.message)
-    .address(address));  
-    // res.status(200).json({'message':'Đã gửi message ạ :v'});
-    res.json({'message':'Đã gửi message ạ :v'});
+    try {
+      var address = {
+        channelId: 'skype',
+        serviceUrl: 'https://smba.trafficmanager.net/apis/',
+        conversation:{  
+          id: req.query.conversationId
+       }
+      };
+      bot.send(new builder.Message()
+      .text(req.query.message)
+      .address(address));  
+      // res.status(200).json({'message':'Đã gửi message ạ :v'});
+      res.json({'message':'Đã gửi message ạ :v'});
+    } catch (error) {
+      console.log(error);
+      res.json({'error':'error'});
+    }    
   }else{
     // res.send('Vui lòng điền conversationId');
     // res.status(200).json({'message':'Vui lòng điền conversationId'});
