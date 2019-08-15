@@ -1,7 +1,7 @@
 ﻿const restify = require('restify');
 const builder = require('botbuilder');
 const weather = require('./weather');
-const botWork = require('./bot-work-repo');
+const conversationRepo = require('./conversation-repo');
 
 const server = restify.createServer();
 
@@ -28,7 +28,8 @@ bot.on('contactRelationUpdate', function (message) {
     var name = message.user ? message.user.name : null;
     var reply = new builder.Message()
       .address(message.address)
-      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id , name || 'there');
+      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id , name || 'bạn');
+    if(message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id);
     bot.send(reply);
   }
 });
@@ -80,7 +81,7 @@ server.get('/sendMessage', function (req, res, next) {
 });
 
 server.get('/sql', function(req, res, next){
-  botWork.insertWork();
+  
   res.send('ok');
 });
 
@@ -93,8 +94,6 @@ server.get('/weather', function (req, res, next) {
       next(error);
     });
 });
-
-
 
 String.prototype.contains = function (content) {
   return this.indexOf(content) !== -1;
