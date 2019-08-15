@@ -30,7 +30,7 @@ exports.findConversationWithConversationId = function (conversationId) {
 }
 
 exports.addConversation = function (conversationId) {
-    findConversationWithConversationId(conversationId).then(function (result) {
+    exports.findConversationWithConversationId(conversationId).then(function (result) {
         if (result == null) {
             var conversation = {
                 id: moment().format('YYYYMMDDHHmmss'),
