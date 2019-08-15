@@ -28,7 +28,7 @@ bot.on('contactRelationUpdate', function (message) {
     var name = message.user ? message.user.name : null;
     var reply = new builder.Message()
       .address(message.address)
-      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning)  ...", name || 'there');
+      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.user.conversationId , name || 'there');
     bot.send(reply);
   }
 });
@@ -107,7 +107,7 @@ bot.dialog('/', function (session) {
 
   if (mess.indexOf('getid') > -1) {
     bot.send(new builder.Message()
-      .text('Your Skype Id: ' + session.message.address.conversation.id)
+      .text('Conversation Id của bạn: ' + session.message.address.conversation.id)
       .address(session.message.address));
   }
   else if (mess == 'hi' || mess == 'hello') {
