@@ -28,7 +28,7 @@ bot.on('contactRelationUpdate', function (message) {
     var name = message.user ? message.user.name : null;
     var reply = new builder.Message()
       .address(message.address)
-      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.user.conversationId , name || 'there');
+      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id , name || 'there');
     bot.send(reply);
   }
 });
