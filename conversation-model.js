@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var ConversationSchemaModel = new Schema({
   // _id: Schema.Types.ObjectId,
   id: String,
-  conversationId: String
+  conversationId: String,
+  name: String
 });
 
 exports.conversationModel = function () {

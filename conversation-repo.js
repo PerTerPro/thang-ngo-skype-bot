@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 const moment = require('moment');
 const url = process.env.ConnectionString || 'mongodb+srv://perterpro:hahahihi@thang-ngo-bot-scidd.mongodb.net/bot-database?retryWrites=true&w=majority';
-const collection = 'conversation';
+const collection = 'conversations';
 
 mongoose.connect(url, { useNewUrlParser: true });
 //  const client = new mongoose.connect(url, { useNewUrlParser: true });
@@ -29,12 +29,13 @@ exports.findConversationWithConversationId = function (conversationId) {
     return Conversation.findOne(query);
 }
 
-exports.addConversation = function (conversationId) {
+exports.addConversation = function (conversationId, name) {
     exports.findConversationWithConversationId(conversationId).then(function (result) {
         if (result == null) {
             var conversation = {
                 id: moment().format('YYYYMMDDHHmmss'),
-                conversationId: conversationId
+                conversationId: conversationId,
+                name: name
             }
             return Conversation.create(conversation);
         }

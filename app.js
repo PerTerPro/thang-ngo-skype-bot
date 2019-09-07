@@ -29,7 +29,7 @@ bot.on('contactRelationUpdate', function (message) {
     var reply = new builder.Message()
       .address(message.address)
       .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id , name || 'bạn');
-    if(message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id);
+    if(message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id, name);
     bot.send(reply);
   }
 });
