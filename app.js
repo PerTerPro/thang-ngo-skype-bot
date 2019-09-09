@@ -9,7 +9,11 @@ const server = restify.createServer();
 //http://restify.com/docs/plugins-api/#queryparser
 server.use(restify.plugins.queryParser());
 //using CORS
-server.use(restify.CORS());
+server.use(restify.CORS({
+  origins: ['*'],   // defaults to ['*']
+  // credentials: true,                 // defaults to false
+  // headers: ['x-foo']                 // sets expose-headers
+}));
 
 server.listen(process.env.port || process.env.PORT || 56789, function () {
   console.log('%s listening to %s', server.name, server.url);
