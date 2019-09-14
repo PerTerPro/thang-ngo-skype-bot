@@ -3,11 +3,12 @@ const builder = require('botbuilder');
 const weather = require('./weather');
 const conversationRepo = require('./conversation-repo');
 const corsMiddleware = require('restify-cors-middleware')
- 
+
 const cors = corsMiddleware({
+  preflightMaxAge: 5,
   origins: ['*'],
-  allowHeaders: ['API-Token'],
-  exposeHeaders: ['API-Token-Expiry']
+  allowHeaders: ['X-App-Version'],
+  exposeHeaders: []
 })
 
 const server = restify.createServer();
@@ -39,8 +40,8 @@ bot.on('contactRelationUpdate', function (message) {
     var name = message.user ? message.user.name : null;
     var reply = new builder.Message()
       .address(message.address)
-      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id , name || 'bạn');
-    if(message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id, name);
+      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id, name || 'bạn');
+    if (message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id, name);
     bot.send(reply);
   }
 });
@@ -67,32 +68,32 @@ server.get('/hello', function (req, res, next) {
 });
 
 server.get('/sendMessage', function (req, res, next) {
-  if(req.query.conversationId != undefined){
+  if (req.query.conversationId != undefined) {
     try {
       var address = {
         channelId: 'skype',
         serviceUrl: 'https://smba.trafficmanager.net/apis/',
-        conversation:{  
+        conversation: {
           id: req.query.conversationId
-       }
+        }
       };
       bot.send(new builder.Message()
-      .text(req.query.message)
-      .address(address));  
+        .text(req.query.message)
+        .address(address));
       // res.status(200).json({'message':'Đã gửi message ạ :v'});
-      res.json({'message':'Đã gửi message ạ :v'});
+      res.json({ 'message': 'Đã gửi message ạ :v' });
     } catch (error) {
       console.log(error);
-      res.json({'error':'error'});
-    }    
-  }else{
+      res.json({ 'error': 'error' });
+    }
+  } else {
     // res.send('Vui lòng điền conversationId');
     // res.status(200).json({'message':'Vui lòng điền conversationId'});
   }
 });
 
-server.get('/sql', function(req, res, next){
-  
+server.get('/sql', function (req, res, next) {
+
   res.send('ok');
 });
 
