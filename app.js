@@ -12,7 +12,7 @@ server.use(restify.plugins.queryParser());
 
 const cors = corsMiddleware({
   // preflightMaxAge: 5,
-  origins: ['http://localhost:3000'],
+  origins: ['*'],
   allowHeaders: ['X-App-Version'],
   exposeHeaders: []
 });
