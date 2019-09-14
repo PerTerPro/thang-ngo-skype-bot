@@ -4,18 +4,18 @@ const weather = require('./weather');
 const conversationRepo = require('./conversation-repo');
 const corsMiddleware = require('restify-cors-middleware')
 
-const cors = corsMiddleware({
-  preflightMaxAge: 5,
-  origins: ['*'],
-  allowHeaders: ['X-App-Version'],
-  exposeHeaders: []
-})
-
 const server = restify.createServer();
 
 // using plugin của restify 
 //http://restify.com/docs/plugins-api/#queryparser
 server.use(restify.plugins.queryParser());
+
+const cors = corsMiddleware({
+  // preflightMaxAge: 5,
+  origins: ['*'],
+  allowHeaders: ['X-App-Version'],
+  exposeHeaders: []
+});
 
 //using CORS
 server.pre(cors.preflight);
