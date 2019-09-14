@@ -2,20 +2,23 @@
 const builder = require('botbuilder');
 const weather = require('./weather');
 const conversationRepo = require('./conversation-repo');
+const corsMiddleware = require('restify-cors-middleware')
+ 
+const cors = corsMiddleware({
+  origins: ['*'],
+  allowHeaders: ['API-Token'],
+  exposeHeaders: ['API-Token-Expiry']
+})
 
 const server = restify.createServer();
 
 // using plugin của restify 
 //http://restify.com/docs/plugins-api/#queryparser
 server.use(restify.plugins.queryParser());
+
 //using CORS
-server.use(
-  function crossOrigin(req,res,next){
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    return next();
-  }
-);
+server.pre(cors.preflight);
+server.use(cors.actual);
 
 server.listen(process.env.port || process.env.PORT || 56789, function () {
   console.log('%s listening to %s', server.name, server.url);
