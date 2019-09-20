@@ -40,10 +40,15 @@ const bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage);
 // ---- Handle user action ----
 bot.on('contactRelationUpdate', function (message) {
   if (message.action === 'add') {
-    var name = message.user ? message.user.name : null;
+    var name = message.user ? message.user.name : 'bạn';
+
+    var helloMessage = 'Xin chào ' + name + '... \n ' + 
+                       'Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... \n ' + 
+                       'Để lên lịch nhắc việc, truy cập đường link: https://xam-le-bot-remind.herokuapp.com \n ' +
+                       'ConversationId của bạn: ' + message.address.conversation.id;
     var reply = new builder.Message()
       .address(message.address)
-      .text("Xin chào %s... Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... ConversationId của bạn: " + message.address.conversation.id, name || 'bạn');
+      .text(helloMessage).textFormat('plain');
     if (message.address.conversation.id) conversationRepo.addConversation(message.address.conversation.id, name);
     bot.send(reply);
   }
@@ -81,7 +86,7 @@ server.get('/sendMessage', function (req, res, next) {
         }
       };
       bot.send(new builder.Message()
-        .text(req.query.message)
+        .text(req.query.message).textFormat('plain')
         .address(address));
       // res.status(200).json({'message':'Đã gửi message ạ :v'});
       res.json({ 'message': 'Đã gửi message ạ :v' });
@@ -106,7 +111,7 @@ server.post('/sendMessage', function (req, res, next) {
         }
       };
       bot.send(new builder.Message()
-        .text(req.body.message)
+        .text(req.body.message).textFormat('plain')
         .address(address));
       // res.status(200).json({'message':'Đã gửi message ạ :v'});
       res.json({ 'message': 'Đã gửi message ạ :v' });
@@ -189,10 +194,10 @@ bot.dialog('/', function (session) {
 // bot.dialog('bot-work-dialog', [
 //   function (session, args, next) {
 //     var botWorkChoises = [
-//       "Tạo việc mới cho BOT nhắc :v \n",
-//       "Hiển thị tất cả công việc đang có ra :v \n"
+//       'Tạo việc mới cho BOT nhắc :v \n',
+//       'Hiển thị tất cả công việc đang có ra :v \n'
 //     ];
-//     builder.Prompts.choice(session, "Bạn muốn làm gì với chức năng nhắc việc của BOT :v? \n", botWorkChoises, { listStyle: builder.ListStyle.button });
+//     builder.Prompts.choice(session, 'Bạn muốn làm gì với chức năng nhắc việc của BOT :v? \n', botWorkChoises, { listStyle: builder.ListStyle.button });
 //   }
 // ]);
 
@@ -210,27 +215,27 @@ bot.dialog('/', function (session) {
 //   function (session, args, next) {
 //     session.dialogData.profile = args || {}; // Set the profile or create the object.
 //     if (!session.dialogData.profile.name) {
-//       builder.Prompts.text(session, "What's your name?");
+//       builder.Prompts.text(session, 'What's your name?');
 //     } else {
 //       next(); // Skip if we already have this info.
 //     }
 //   },
 //   function (session, results, next) { 
 //     var salesData = {
-//       "west": {
+//       'west': {
 //           units: 200,
-//           total: "$6,000"
+//           total: '$6,000'
 //       },
-//       "central": {
+//       'central': {
 //           units: 100,
-//           total: "$3,000"
+//           total: '$3,000'
 //       },
-//       "east": {
+//       'east': {
 //           units: 300,
-//           total: "$9,000"
+//           total: '$9,000'
 //       }
 //   };
-//     builder.Prompts.choice(session, "Which region would you like sales for?", salesData, { listStyle: builder.ListStyle.button });
+//     builder.Prompts.choice(session, 'Which region would you like sales for?', salesData, { listStyle: builder.ListStyle.button });
 //   },
 //   function (session, results, next) {
 //     if (results.response) {
@@ -238,7 +243,7 @@ bot.dialog('/', function (session) {
 //       session.dialogData.profile.name = results.response;
 //     }
 //     if (!session.dialogData.profile.company) {
-//       builder.Prompts.text(session, "What company do you work for?");
+//       builder.Prompts.text(session, 'What company do you work for?');
 //     } else {
 //       next(); // Skip if we already have this info.
 //     }
