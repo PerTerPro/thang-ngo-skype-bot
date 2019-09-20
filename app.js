@@ -9,6 +9,9 @@ const server = restify.createServer();
 // using plugin của restify 
 //http://restify.com/docs/plugins-api/#queryparser
 server.use(restify.plugins.queryParser());
+server.use(restify.plugins.bodyParser({
+  mapParams: true
+}));
 
 const cors = corsMiddleware({
   // preflightMaxAge: 5,
@@ -79,6 +82,31 @@ server.get('/sendMessage', function (req, res, next) {
       };
       bot.send(new builder.Message()
         .text(req.query.message)
+        .address(address));
+      // res.status(200).json({'message':'Đã gửi message ạ :v'});
+      res.json({ 'message': 'Đã gửi message ạ :v' });
+    } catch (error) {
+      console.log(error);
+      res.json({ 'error': 'error' });
+    }
+  } else {
+    // res.send('Vui lòng điền conversationId');
+    // res.status(200).json({'message':'Vui lòng điền conversationId'});
+  }
+});
+
+server.post('/sendMessage', function (req, res, next) {
+  if (req.body.conversationId != undefined) {
+    try {
+      var address = {
+        channelId: 'skype',
+        serviceUrl: 'https://smba.trafficmanager.net/apis/',
+        conversation: {
+          id: req.body.conversationId
+        }
+      };
+      bot.send(new builder.Message()
+        .text(req.body.message)
         .address(address));
       // res.status(200).json({'message':'Đã gửi message ạ :v'});
       res.json({ 'message': 'Đã gửi message ạ :v' });
@@ -228,6 +256,6 @@ bot.dialog('/', function (session) {
 // Example cho cái next
 server.use(function (error, req, res, next) {
   console.log(error);
-  res.statusCode(500);
+  // res.statusCode(500);
   res.send(error.message);
 });
