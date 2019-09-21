@@ -4,9 +4,11 @@
 
 var requestPromise = require('request-promise-native');
 var request = require('request');
-var moment = require('moment');
 var _ = require('lodash');
 var util = require('./util');
+
+const moment = require('moment-timezone');
+const timeZone = "Asia/Ho_Chi_Minh";
 
 const _openWeatherMapApiKey = '744c5d27ac644b5925dbe5c3b1018222';
 
@@ -34,7 +36,7 @@ exports.getWeather = function () {
 
 function renderWeatherMessage(model) {
   var msg = '';
-  msg += util.stringFormat('**Thời tiết {0}** {1}: \n', model.name, moment().format('DD/MM/YYYY - HH:mm'));
+  msg += util.stringFormat('**Thời tiết {0}** {1}: \n', model.name, moment().tz(timeZone).format('DD/MM/YYYY - HH:mm'));
   msg += (model.main.temp_min == model.main.temp_max) ?
     'Nhiệt độ hiện tại: **' + model.main.temp + '°C** \n' :
     'Nhiệt độ từ **' + model.main.temp_min + '** tới **' + model.main.temp_max + '°C** \n';
