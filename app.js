@@ -155,7 +155,7 @@ bot.dialog('/', function (session) {
       .text('Conversation Id của bạn: ' + session.message.address.conversation.id)
       .address(session.message.address));
   }
-  else if (mess == 'hi' || mess == 'hello') {
+  else if ((mess.indexOf('hi') > -1 && mess.length == 2) || (mess.indexOf('hello') > -1 && mess.length == 5)) {
     bot.send(new builder.Message()
       .text('Xéo (mooning)')
       .address(session.message.address));
@@ -175,7 +175,7 @@ bot.dialog('/', function (session) {
           .address(session.message.address));
       });
   }
-  else if (mess.toLowerCase() == 'gái xinh' || mess.toLowerCase() == 'girl') {
+  else if (mess.indexOf('gái xinh') > -1 || mess.indexOf('girl') > -1) {
     girlImg.getGirlImg()
       .then(function (data) {
          bot.send(new builder.Message().address(session.message.address).text('Mời thưởng ạ~~~'));
