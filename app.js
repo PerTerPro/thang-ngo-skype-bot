@@ -179,7 +179,10 @@ bot.dialog('/', function (session) {
     girlImg.getGirlImg()
       .then(function (data) {
          bot.send(new builder.Message().address(session.message.address).text('Mời thưởng ạ~~~'));
-         bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));
+        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));
+         bot.send(new builder.Message()
+         .address(session.message.address)
+         .addAttachment({ fallbackText: '123', contentType: 'image/jpeg', contentUrl: data.messages[0].attachment.payload.url  }));
       })
       .catch(function (error) {
         bot.send(new builder.Message()
