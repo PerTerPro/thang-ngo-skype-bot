@@ -178,11 +178,9 @@ bot.dialog('/', function (session) {
   else if (mess.indexOf('gái xinh') > -1 || mess.indexOf('girl') > -1) {
     girlImg.getGirlImg()
       .then(function (data) {
-         bot.send(new builder.Message().address(session.message.address).text('Mời thưởng ạ~~~'));
-        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));     
+        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));    
 
          var msg = new builder.Message(session)
-            .text("Here you go:")
             .attachments([{
                 contentType: "image/jpeg",
                 contentUrl: data.messages[0].attachment.payload.url
