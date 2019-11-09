@@ -1,6 +1,7 @@
 ﻿const restify = require('restify');
 const builder = require('botbuilder');
 const weather = require('./weather');
+const girlImg = require('./girl');
 const conversationRepo = require('./conversation-repo');
 const corsMiddleware = require('restify-cors-middleware')
 
@@ -165,10 +166,22 @@ bot.dialog('/', function (session) {
   else if (mess.indexOf('thời tiết') > -1 || mess.indexOf('weather') > -1) {
     weather.getWeather()
       .then(function (data) {
-        bot.send(new builder.Message().address(session.message.address).text(data));
+         bot.send(new builder.Message().address(session.message.address).text(data));
       })
       .catch(function (error) {
         next(error);
+        bot.send(new builder.Message()
+          .text(error.message)
+          .address(session.message.address));
+      });
+  }
+  else if (mess.toLowerCase() == 'gái xinh' || mess.toLowerCase() == 'girl') {
+    girlImg.getGirlImg()
+      .then(function (data) {
+         bot.send(new builder.Message().address(session.message.address).text('Mời thưởng ạ~~~'));
+         bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));
+      })
+      .catch(function (error) {
         bot.send(new builder.Message()
           .text(error.message)
           .address(session.message.address));
