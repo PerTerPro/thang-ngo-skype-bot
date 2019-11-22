@@ -183,7 +183,7 @@ bot.dialog('/', function (session) {
          var msg = new builder.Message(session)
             .attachments([{
                 contentType: "image/jpeg",
-                contentUrl: data.messages[0].attachment.payload.url
+                contentUrl: data
             }]);
         session.endDialog(msg);
       })

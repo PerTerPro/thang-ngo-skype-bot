@@ -12,7 +12,7 @@ exports.getGirlImg = function () {
 function getRandomGirlImg() {
   var a = requestPromise({
     method: 'GET',
-    uri: 'https://ketnoi-28.000webhostapp.com/fl_img/index.php',
+    uri: 'http://www.girl-img.somee.com/api/girl-img/get-image',
     json: true
   });
 
