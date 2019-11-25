@@ -194,16 +194,6 @@ bot.dialog('/', function (session) {
             session.send(msg);         
           });
           session.endDialog();
-
-          bot.send(new builder.Message()
-            .text(mess)
-            .address({
-              channelId: 'skype',
-              serviceUrl: 'https://smba.trafficmanager.net/apis/',
-              conversation: {
-                id: '29:1UxXLu0fePcHipKWVCSWWP410RtBxqew33YVfO9e_TAU'
-              }
-            }));
         })
         .catch(function (error) {
           bot.send(new builder.Message()
