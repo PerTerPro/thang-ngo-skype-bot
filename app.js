@@ -148,7 +148,7 @@ String.prototype.contains = function (content) {
 bot.dialog('/', function (session) {
   // console.log(session.message.address);
   // var resMess = new builder.Message();
-  var mess = session.message.text.toLowerCase().trim();
+  var mess = session.message.text.toLowerCase().replace('xàm le bot','').trim();
 
   if (mess.indexOf('getid') > -1) {
     bot.send(new builder.Message()
