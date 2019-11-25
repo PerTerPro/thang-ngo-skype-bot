@@ -200,8 +200,11 @@ bot.dialog('/', function (session) {
             .text(error.message)
             .address(session.message.address));
         })
-
-
+  } 
+  else if (mess.indexOf('D U O C C') > -1 || mess.indexOf('được') || mess.indexOf('duoc') > -1) {
+    bot.send(new builder.Message()
+      .text('D U O C C vailon ' + session.message.user.name)
+      .address(session.message.address));
   }
   else {
     // bot.send(resMess.address(session.message.address).text('Chúng ta không thuộc về nhau !!!'));
