@@ -43,10 +43,10 @@ bot.on('contactRelationUpdate', function (message) {
   if (message.action === 'add') {
     var name = message.user ? message.user.name : 'bạn';
 
-    var helloMessage = 'Xin chào ' + name + '... \n ' + 
-                       'Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... \n ' + 
-                       'Để lên lịch nhắc việc, truy cập đường link: https://xam-le-bot-remind.herokuapp.com \n ' +
-                       'ConversationId của bạn: ' + message.address.conversation.id;
+    var helloMessage = 'Xin chào ' + name + '... \n ' +
+      'Cảm ơn vì đã kết bạn với với tôi. Hô lê (mooning) ... \n ' +
+      'Để lên lịch nhắc việc, truy cập đường link: https://xam-le-bot-remind.herokuapp.com \n ' +
+      'ConversationId của bạn: ' + message.address.conversation.id;
     var reply = new builder.Message()
       .address(message.address)
       .text(helloMessage).textFormat('plain');
@@ -166,7 +166,7 @@ bot.dialog('/', function (session) {
   else if (mess.indexOf('thời tiết') > -1 || mess.indexOf('weather') > -1) {
     weather.getWeather()
       .then(function (data) {
-         bot.send(new builder.Message().address(session.message.address).text(data));
+        bot.send(new builder.Message().address(session.message.address).text(data));
       })
       .catch(function (error) {
         next(error);
@@ -176,28 +176,32 @@ bot.dialog('/', function (session) {
       });
   }
   else if (mess.indexOf('gái xinh') > -1 || mess.indexOf('girl') > -1) {
-    var count = mess.replace('gái xinh','').replace('girl','').trim();
+    var count = mess.replace('gái xinh', '').replace('girl', '').trim();
 
-    if(!count) count = 1;
+    count = count ? parseInt(count) : 1;
 
-    for (let index = 0; index < count; index++) {
-      girlImg.getGirlImg()
-      .then(function (data) {
-        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));   
+    girlImg.getGirlImg(count)
+        .then(function (data) {
+          //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));   
+          
+          data.forEach(element => {
+            var msg = new builder.Message(session)
+            .attachments([{
+              contentType: "image/jpeg",
+              contentUrl: element
+            }]);
+             // session.endDialog(msg);
+            session.send(msg);         
+          });
+          session.endDialog();
+        })
+        .catch(function (error) {
+          bot.send(new builder.Message()
+            .text(error.message)
+            .address(session.message.address));
+        })
 
-        var msg = new builder.Message(session)
-        .attachments([{
-          contentType: "image/jpeg",
-          contentUrl: element
-        }]);
-      session.endDialog(msg);
-      })
-      .catch(function (error) {
-        bot.send(new builder.Message()
-          .text(error.message)
-          .address(session.message.address));
-      });      
-    }   
+
   }
   else {
     // bot.send(resMess.address(session.message.address).text('Chúng ta không thuộc về nhau !!!'));

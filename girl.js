@@ -3,18 +3,18 @@ var request = require('request');
 var _ = require('lodash');
 var util = require('./util');
 
-exports.getGirlImg = function () {
-  return getRandomGirlImg();
+exports.getGirlImg = function (count) {
+  return getRandomGirlImg(count);
 }
 
 //----- Private function -----------
 
 function getRandomGirlImg(count) {  
-  var a = requestPromise({
+  var lst = requestPromise({
     method: 'GET',
-    uri: 'http://www.girl-img.somee.com/api/girl-img/get-image',
+    uri: 'http://www.girl-img.somee.com/api/girl-img/get-image?count=' + count,
     json: true
   });
 
-  return a;
+  return lst;
 }
