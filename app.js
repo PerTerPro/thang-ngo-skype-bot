@@ -201,7 +201,7 @@ bot.dialog('/', function (session) {
             .address(session.message.address));
         })
   } 
-  else if (mess.indexOf('D U O C C') > -1 || mess.indexOf('được') || mess.indexOf('duoc') > -1) {
+  else if (mess.indexOf('được') || mess.indexOf('duoc') > -1) {
     bot.send(new builder.Message()
       .text('D U O C C vailon ' + session.message.user.name)
       .address(session.message.address));
