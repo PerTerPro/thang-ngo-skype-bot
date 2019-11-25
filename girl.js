@@ -9,7 +9,7 @@ exports.getGirlImg = function () {
 
 //----- Private function -----------
 
-function getRandomGirlImg() {
+function getRandomGirlImg(count) {  
   var a = requestPromise({
     method: 'GET',
     uri: 'http://www.girl-img.somee.com/api/girl-img/get-image',
@@ -17,5 +17,4 @@ function getRandomGirlImg() {
   });
 
   return a;
-
 }

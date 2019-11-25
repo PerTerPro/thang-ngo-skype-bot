@@ -176,22 +176,28 @@ bot.dialog('/', function (session) {
       });
   }
   else if (mess.indexOf('gái xinh') > -1 || mess.indexOf('girl') > -1) {
-    girlImg.getGirlImg()
-      .then(function (data) {
-        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));    
+    var count = mess.replace('gái xinh','').replace('girl','').trim();
 
-         var msg = new builder.Message(session)
-            .attachments([{
-                contentType: "image/jpeg",
-                contentUrl: data
-            }]);
-        session.endDialog(msg);
+    if(!count) count = 1;
+
+    for (let index = 0; index < count; index++) {
+      girlImg.getGirlImg()
+      .then(function (data) {
+        //  bot.send(new builder.Message().address(session.message.address).text('![](' + data.messages[0].attachment.payload.url + ')'));   
+
+        var msg = new builder.Message(session)
+        .attachments([{
+          contentType: "image/jpeg",
+          contentUrl: element
+        }]);
+      session.endDialog(msg);
       })
       .catch(function (error) {
         bot.send(new builder.Message()
           .text(error.message)
           .address(session.message.address));
-      });
+      });      
+    }   
   }
   else {
     // bot.send(resMess.address(session.message.address).text('Chúng ta không thuộc về nhau !!!'));
