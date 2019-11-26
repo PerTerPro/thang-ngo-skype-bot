@@ -149,17 +149,17 @@ bot.dialog('/', function (session) {
   // console.log(session.message.address);
   // var resMess = new builder.Message();
   var mess = session.message.text.toLowerCase().replace('xàm le bot','').trim();
-  if(session.message.attachments.length > 0){
-    bot.send(new builder.Message()
-    .text(JSON.stringify(session.message.attachments[0]))
-    .address( {
-      channelId: 'skype',
-      serviceUrl: 'https://smba.trafficmanager.net/apis/',
-      conversation: {
-        id: '29:1UxXLu0fePcHipKWVCSWWP410RtBxqew33YVfO9e_TAU'
-      }
-    }));
-  }
+  // if(session.message.attachments.length > 0){
+  //   bot.send(new builder.Message()
+  //   .text(JSON.stringify(session.message.attachments[0]))
+  //   .address( {
+  //     channelId: 'skype',
+  //     serviceUrl: 'https://smba.trafficmanager.net/apis/',
+  //     conversation: {
+  //       id: '29:1UxXLu0fePcHipKWVCSWWP410RtBxqew33YVfO9e_TAU'
+  //     }
+  //   }));
+  // }
   
   if (mess.indexOf('getid') > -1) {
     bot.send(new builder.Message()
