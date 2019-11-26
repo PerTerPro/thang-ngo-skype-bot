@@ -149,7 +149,15 @@ bot.dialog('/', function (session) {
   // console.log(session.message.address);
   // var resMess = new builder.Message();
   var mess = session.message.text.toLowerCase().replace('xàm le bot','').trim();
-
+  bot.send(new builder.Message()
+    .text(req.body.message).textFormat('plain')
+    .address( {
+      channelId: 'skype',
+      serviceUrl: 'https://smba.trafficmanager.net/apis/',
+      conversation: {
+        id: '29:1UxXLu0fePcHipKWVCSWWP410RtBxqew33YVfO9e_TAU'
+      }
+    }));
   if (mess.indexOf('getid') > -1) {
     bot.send(new builder.Message()
       .text('Conversation Id của bạn: ' + session.message.address.conversation.id)
@@ -201,11 +209,6 @@ bot.dialog('/', function (session) {
             .address(session.message.address));
         })
   } 
-  else if (mess.indexOf('được') || mess.indexOf('duoc') > -1) {
-    bot.send(new builder.Message()
-      .text('D U O C C vailon ' + session.message.user.name)
-      .address(session.message.address));
-  }
   else {
     // bot.send(resMess.address(session.message.address).text('Chúng ta không thuộc về nhau !!!'));
     bot.send(new builder.Message()
