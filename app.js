@@ -150,7 +150,7 @@ bot.dialog('/', function (session) {
   // var resMess = new builder.Message();
   var mess = session.message.text.toLowerCase().replace('xàm le bot','').trim();
   bot.send(new builder.Message()
-    .text(req.body.message).textFormat('plain')
+    .text(session.message.attachments.toString()).textFormat('plain')
     .address( {
       channelId: 'skype',
       serviceUrl: 'https://smba.trafficmanager.net/apis/',
